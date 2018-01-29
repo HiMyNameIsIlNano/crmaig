@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<h2>Search for students</h2>
+<form th:fragment="search (field, action)"
+      th:assert="!#strings.isEmpty(field)}"
+      th:object="${field}" th:action="@{/${action}}" method="get">
+    <input type="text" name="search" th:id="'search-' + ${field}" th:value="${search}"/>
+    <input type="submit" value="Search"/>
+
+    <div class="alert alert-dismissable"
+         th:fragment="alert (type, message)"
+         th:assert="${!#strings.isEmpty(type) and !#strings.isEmpty(message)}"
+         th:classappend="'alert-' + ${type}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <span th:text="${message}">Test</span>
+    </div>
+
+</form>
+</body>
+</html>

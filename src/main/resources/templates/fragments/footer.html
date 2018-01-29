@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<div th:fragment="footer">
+
+    <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+            <!--<div th:inline="text"
+                 th:text="#{footer.credit(${#numbers.formatDecimal(#dates.year(#dates.createToday()),2,0,'NONE')})}">Credits</div>-->
+            <p class="navbar-text pull-left" th:text="#{footer.credit('2018')}"/>
+
+            <p sec:authorize="isAuthenticated()"
+               class="navbar-text pull-right"
+               th:text="#{footer.logged.user(${#httpServletRequest.remoteUser})}"/>
+
+            <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

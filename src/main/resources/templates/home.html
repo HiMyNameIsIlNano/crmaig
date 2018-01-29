@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CRM - Associazione Italiana Glicogenosi</title>
+
+    <div th:replace="fragments/header :: header-css"/>
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header(home)"/>
+
+<div>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 th:text="#{home.description.aig.welcome}">Hello!</h1>
+            <p th:text="#{home.description.aig.welcome.text}">Text</p>
+            <p><a class="btn btn-primary btn-lg" th:href="#{home.description.aig.link1.url}" th:text="#{home.description.aig.about}" role="button">Learn more &raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
+                <h2 th:text="#{home.description.aig.link1}">Heading</h2>
+                <p th:text="#{home.description.aig.link1.text}">Text</p>
+                <p><a class="btn btn-default" th:href="#{home.description.aig.link1.url}" href="" th:text="#{home.description.aig.link}" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2 th:text="#{home.description.aig.link2}">Heading</h2>
+                <p th:text="#{home.description.aig.link2.text}">Text</p>
+                <p><a class="btn btn-default" th:href="#{home.description.aig.link2.url}" th:text="#{home.description.aig.link}" role="button">View details</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2 th:text="#{home.description.aig.link3}">Heading</h2>
+                <p th:text="#{home.description.aig.link3.text}">Text</p>
+                <p><a class="btn btn-default" th:href="#{home.description.aig.link3.url}" th:text="#{home.description.aig.link}" role="button">View details</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- /.container -->
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

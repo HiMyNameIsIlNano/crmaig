@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sd="http://www.thymeleaf.org/spring-data">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header(fileUpload)"/>
+
+<div class="container">
+    <div th:if="${#ctx.containsVariable('errorMessage')}">
+        <div th:replace="fragments/alert :: alert (type='danger', message=${errorMessage})">...</div>
+    </div>
+
+    <div th:if="${#ctx.containsVariable('infoMessage')}">
+        <div th:replace="fragments/alert :: alert (type='info', message=${infoMessage})">...</div>
+    </div>
+
+    <div class="starter-template">
+        <h1 th:inline="text" th:text="#{csv.list.title}">List of the uploaded File(s)</h1>
+    </div>
+
+    <div id="files-table">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th><a class="sorted" th:text="#{csv.list.fileName}">Name</a></th>
+                <th><a class="sorted" sd:pagination-sort="category" th:text="#{csv.list.category}">Category</a></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${!files.hasContent()}">
+                <td colspan="5" th:text="#{csv.list.noFileFound}">No file found</td>
+            </tr>
+            <tr th:each="file : ${files}">
+                <td th:text="${file.fileName}">Name</td>
+                <td th:text="#{${'csv.fileType.'+file.category}}">Category</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <!--<div class="col-md-8 col-md-offset-2">-->
+    <div>
+        <h3 th:text="#{upload.file.title}">Upload CSV File</h3>
+        <form method="POST" th:action="@{/csv/upload}" enctype="multipart/form-data">
+            <!--/* patients */-->
+            <div class="form-group">
+                <div class="input-group input-file" name="patients">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button"
+                            th:text="#{upload.file.select}">Choose</button>
+                    </span>
+                    <input type="text" class="form-control" th:placeholder="#{upload.file.placeholder.patients}" />
+                    <span class="input-group-btn">
+                    <button class="btn btn-warning btn-reset" type="button"
+                        th:text="#{upload.file.undo}">Reset</button>
+                    </span>
+                </div>
+            </div>
+
+            <!--/* addresses */-->
+            <div class="form-group">
+                <div class="input-group input-file" name="addresses">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button"
+                                th:text="#{upload.file.select}">Choose</button>
+                    </span>
+                    <input type="text" class="form-control" th:placeholder="#{upload.file.placeholder.addresses}" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-warning btn-reset" type="button"
+                            th:text="#{upload.file.undo}">Reset</button>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary pull-right"
+                        th:text="#{upload.file.upload}">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/js/fileUpload.js"></script>
+
+<!-- /.container -->
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>
