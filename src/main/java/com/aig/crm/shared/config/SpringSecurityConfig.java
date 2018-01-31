@@ -49,7 +49,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticate")
-                .failureUrl("/login-error.html")
                 .permitAll()
                 .and()
                 .logout()
@@ -58,5 +57,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
+
+
 
 }

@@ -11,8 +11,7 @@
 
     <div class="starter-template">
         <h1>Accesso non consentito</h1>
-        <div th:inline="text">L'Utente '[[${#httpServletRequest.remoteUser}]]',
-            non ha il permesso per visitare questa pagina.</div>
+        <div th:inline="text" th:text="#{error.accessDenied(${#httpServletRequest.remoteUser})}">Acces Denied</div>
     </div>
 
 </div>

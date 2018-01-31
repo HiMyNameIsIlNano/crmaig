@@ -27,16 +27,9 @@ public class MenuController {
         return "/home";
     }
 
-    // Login form with error
-    @GetMapping("/login-error")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "/error";
-    }
-
     @GetMapping("/access-denied")
     public String accessDenied() {
-        return "/error/accessDenied";
+        return "/errors/accessDenied";
     }
 
 }
