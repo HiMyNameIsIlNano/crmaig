@@ -31,6 +31,7 @@
         <thymeleaf-extras-springsecurity4.version>3.0.2.RELEASE</thymeleaf-extras-springsecurity4.version>
         <thymeleaf-extras-java8time.version>3.0.0.RELEASE</thymeleaf-extras-java8time.version>
         <fontsawesome.version>4.7.0</fontsawesome.version>
+        <jgitflow.version>1.0-m5.1</jgitflow.version>
     </properties>
 
     <dependencies>
@@ -131,6 +132,23 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>${jgitflow.version}</version>
+                <configuration>
+                    <flowInitContext>
+                        <masterBranchName>master</masterBranchName>
+                        <developBranchName>dev</developBranchName>
+                    </flowInitContext>
+                    <!--<username>USERNAME_FOR_A_GIT_USER</username>
+                    <password>PASSWORD_FOR_A_GIT_USER</password>-->
+                    <noDeploy>true</noDeploy>
+                    <squash>true</squash>
+                    <scmCommentPrefix>[RELEASE] </scmCommentPrefix>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -171,6 +189,5 @@
             </build>
         </profile>
     </profiles>
-
 
 </project>
