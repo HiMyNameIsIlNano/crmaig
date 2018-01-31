@@ -161,7 +161,7 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
-                        <version>${parent.version}</version>
+                        <version>${project.parent.version}</version>
                         <configuration>
                             <!-- this will get rid of version info from war file name -->
                             <finalName>${project.artifactId}</finalName>
