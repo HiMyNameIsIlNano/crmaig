@@ -1,11 +1,17 @@
-footer{
+/*footer{
     margin-top:60px;
+}*/
+
+.span3 {
+    height: 100% !important;
+    overflow: scroll;
 }
 
 .btn-file {
     position: relative;
     overflow: hidden;
 }
+
 .btn-file input[type=file] {
     position: absolute;
     top: 0;
