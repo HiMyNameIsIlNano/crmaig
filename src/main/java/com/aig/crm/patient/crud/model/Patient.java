@@ -1,6 +1,7 @@
 package com.aig.crm.patient.crud.model;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -67,7 +68,8 @@ public class Patient {
 
     @Column(name = "NOTE")
     @Lob
-    private  String note;
+    @Type(type = "text")
+    private String note;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "REF_INDIRIZZO")
