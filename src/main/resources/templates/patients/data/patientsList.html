@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sd="http://www.thymeleaf.org/spring-data"
       xmlns:sec="http://www.w3.org/1999/xhtml">
+
 <head>
     <div th:replace="fragments/header :: header-css"/>
 </head>
@@ -21,7 +22,7 @@
                     <span class="input-group-btn">
                         <button id="searchButton" name="searchButton"
                                 class="btn btn-primary"
-                                onclick="findBySpecificField('/patients/find-by-surname', 'search-surname', 'patients-table')"
+                                onclick="findBySpecificField('patients/find-by-surname', 'search-surname', 'patients-table')"
                                 type="button"
                                 th:text="#{patients.search.label}">Search button</button>
                     </span>
@@ -33,61 +34,60 @@
 
 <br/>
 
-<div class="container">
+<div class="container table-responsive">
     <div th:fragment="results-list" id="patients-table">
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th><a class="sorted" sd:pagination-sort="id" th:text="#{patients.list.id}">ID</a></th>
-                <th><a class="sorted" sd:pagination-sort="name" th:text="#{patients.list.name}">Name</a></th>
-                <th><a class="sorted" sd:pagination-sort="surname" th:text="#{patients.list.surname}">Surname</a></th>
-                <th sec:authorize="hasRole('ROLE_ADMIN')"
-                    th:text="#{patients.list.glyocogenStorageDiseaseType}">Glycogen Type
-                </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${!patients.hasContent()}">
-                <td colspan="5" th:text="#{patients.list.noPatientFound}">No patient found</td>
-            </tr>
-            <tr th:each="patient : ${patients}">
-                <td th:text="${patient.id}">1</td>
-                <!--<td>
-                    <a href="#" th:href="@{/task/{id}(id=${task.id})}" th:text="${task.title}">Title ...</a>
-                </td>-->
-                <td th:text="${patient.name}">Name</td>
-                <td th:text="${patient.surname}">Surname</td>
-                <td sec:authorize="hasRole('ROLE_ADMIN')"
-                    th:text="#{${'patients.gsd.'+patient.glycogenSDType}}">Glycogen Type
-                </td>
-                <td>
-                    <a th:href="@{/patients/find-by-id/{id}(id=${patient.id})}"
-                       data-toggle="tooltip" th:title="#{patient.details.navigate}">
-                        <i class="fa fa-search-plus" aria-hidden="true"></i>
-                    </a>
-                </td>
-                <!--<td th:text="${#calendars.format(task.dueTo)}">July 11, 2017 2:17:16 PM CDT</td>-->
-            </tr>
-            </tbody>
-        </table>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <nav class="pull-right">
-                    <ul class="pagination" sd:pagination="full">
-                        <li class="disabled"><a href="#" aria-label="Previous"><span
-                                aria-hidden="true">&laquo;</span></a></li>
-                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                    </ul>
-                </nav>
-            </div>
+        <div class="pre-scrollable">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th><a class="sorted" sd:pagination-sort="id" th:text="#{patients.list.id}">ID</a></th>
+                    <th><a class="sorted" sd:pagination-sort="name" th:text="#{patients.list.name}">Name</a></th>
+                    <th><a class="sorted" sd:pagination-sort="surname" th:text="#{patients.list.surname}">Surname</a></th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')"
+                        th:text="#{patients.list.glyocogenStorageDiseaseType}">Glycogen Type
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${!patients.hasContent()}">
+                    <td colspan="5" th:text="#{patients.list.noPatientFound}">No patient found</td>
+                </tr>
+                <tr th:each="patient : ${patients}">
+                    <td th:text="${patient.id}">1</td>
+                    <!--/* <td>
+                        <a href="#" th:href="@{/task/{id}(id=${task.id})}" th:text="${task.title}">Title ...</a>
+                    </td> */-->
+                    <td th:text="${patient.name}">Name</td>
+                    <td th:text="${patient.surname}">Surname</td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"
+                        th:text="#{${'patients.gsd.'+patient.glycogenSDType}}">Glycogen Type
+                    </td>
+                    <td>
+                        <a th:href="@{/patients/find-by-id/{id}(id=${patient.id})}"
+                           data-toggle="tooltip" th:title="#{patient.details.navigate}">
+                            <i class="fa fa-search-plus" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <!--/* <td th:text="${#calendars.format(task.dueTo)}">July 11, 2017 2:17:16 PM CDT</td> */-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <nav class="pull-right">
+                <ul class="pagination" sd:pagination="full">
+                    <li class="disabled"><a href="#" aria-label="Previous"><span
+                            aria-hidden="true">&laquo;</span></a></li>
+                    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
 
-<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
-<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/js/ajaxSearch.js"></script>
 
 <!-- /.container -->

@@ -15,7 +15,7 @@ public class FileUpload {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "file_upload_generator")
-    @SequenceGenerator(name="file_upload_generator", sequenceName = "file_upload_id_seq")
+    @SequenceGenerator(name="file_upload_generator", sequenceName = "file_upload_id_seq", allocationSize = 1)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 

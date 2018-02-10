@@ -7,10 +7,16 @@
         <link rel="stylesheet" type="text/css"
               th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
 
-        <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <script src="jquery.min.js"
+                th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
 
-        <link rel="stylesheet" th:href="@{css/main.css}"
-              href="../../css/main.css" />
+        <script src="bootstrap.min.js"
+                th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+        <link rel="stylesheet" type="text/css"
+              href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+        <link th:href="@{/css/main.css}" href="main.css" rel="stylesheet" media="screen"/>
     </div>
 </head>
 <body>
@@ -73,5 +79,6 @@
         </div>
     </nav>
 </div>
+
 </body>
 </html>
