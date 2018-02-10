@@ -7,7 +7,7 @@
 
 <div th:replace="fragments/header :: header(fileUpload)"/>
 
-<div class="container">
+<div class="container table-responsive">
     <div th:if="${#ctx.containsVariable('errorMessage')}">
         <div th:replace="fragments/alert :: alert (type='danger', message=${errorMessage})">...</div>
     </div>
@@ -21,23 +21,25 @@
     </div>
 
     <div id="files-table">
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th><a class="sorted" th:text="#{csv.list.fileName}">Name</a></th>
-                <th><a class="sorted" sd:pagination-sort="category" th:text="#{csv.list.category}">Category</a></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${!files.hasContent()}">
-                <td colspan="5" th:text="#{csv.list.noFileFound}">No file found</td>
-            </tr>
-            <tr th:each="file : ${files}">
-                <td th:text="${file.fileName}">Name</td>
-                <td th:text="#{${'csv.fileType.'+file.category}}">Category</td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="pre-scrollable">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th><a class="sorted" th:text="#{csv.list.fileName}">Name</a></th>
+                    <th><a class="sorted" sd:pagination-sort="category" th:text="#{csv.list.category}">Category</a></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${!files.hasContent()}">
+                    <td colspan="5" th:text="#{csv.list.noFileFound}">No file found</td>
+                </tr>
+                <tr th:each="file : ${files}">
+                    <td th:text="${file.fileName}">Name</td>
+                    <td th:text="#{${'csv.fileType.'+file.category}}">Category</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
