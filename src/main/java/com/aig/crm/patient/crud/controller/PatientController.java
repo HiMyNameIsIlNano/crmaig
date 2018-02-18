@@ -1,5 +1,6 @@
 package com.aig.crm.patient.crud.controller;
 
+import com.aig.crm.breadcrumb.annotations.Link;
 import com.aig.crm.patient.crud.repository.PatientRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
@@ -26,12 +27,14 @@ public class PatientController {
         return "patients";
     }
 
+    @Link(label="patients.breadcrum.list", family="PatientController", parent = "" )
     @GetMapping("/list")
     public String getPatientsList(Model model, @SortDefault("surname") Pageable pageable){
         model.addAttribute("patients", patientRepository.findAll(pageable));
         return "/patients/data/patientsList";
     }
 
+    @Link(label="patients.breadcrum.list", family="PatientController", parent = "" )
     @GetMapping("/find-by-surname/{surname}")
     public String getPatientsBySurname(@PathVariable(value="surname", required = false) String surname,
                                        Model model,
@@ -41,6 +44,7 @@ public class PatientController {
         return "/patients/data/patientsList :: results-list";
     }
 
+    @Link(label="patients.breadcrum.details", family="PatientController", parent = "patients.breadcrum.list" )
     @GetMapping("/find-by-id/{id}")
     public String getPatientsDetails(@PathVariable(value="id") Long id, Model model) {
         model.addAttribute("patient", patientRepository.findOne(id));

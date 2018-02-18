@@ -1,5 +1,6 @@
 package com.aig.crm.patient.upload.controller;
 
+import com.aig.crm.breadcrumb.annotations.Link;
 import com.aig.crm.patient.upload.service.FileUploadService;
 import com.aig.crm.patient.upload.exception.StorageFileNotReadableException;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ public class FileUploadController {
         return "files";
     }
 
+    @Link(label="upload.breadcrum.upload", family="FileUploadController", parent = "" )
     @GetMapping("/list")
     public String listUploadedFiles(Model model, Pageable pageable) {
         model.addAttribute("files", fileUploadService.findAll(pageable));
