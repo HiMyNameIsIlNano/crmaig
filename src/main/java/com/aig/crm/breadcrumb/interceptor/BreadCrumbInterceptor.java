@@ -23,7 +23,7 @@ public class BreadCrumbInterceptor extends HandlerInterceptorAdapter {
 	private static final String CURRENT_BREAD_CRUMB_LINKS = "currentBreadCrumb";
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 		Annotation[] declaredAnnotations = getDeclaredAnnotationsForHandler(handler);
 		HttpSession session = request.getSession();
 		emptyCurrentBreadCrumb(session);
@@ -36,11 +36,9 @@ public class BreadCrumbInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 
-
 	private void emptyCurrentBreadCrumb(HttpSession session) {
 		session.setAttribute(CURRENT_BREAD_CRUMB_LINKS, new LinkedList<BreadCrumbLink>());
 	}
-
 
 	private void processAnnotation(HttpServletRequest request, HttpSession session, Annotation annotation) {
 		Link link = (Link) annotation;
@@ -55,14 +53,11 @@ public class BreadCrumbInterceptor extends HandlerInterceptorAdapter {
 
 		LinkedHashMap<String, BreadCrumbLink> familyMap = breadCrumb.computeIfAbsent(family, k -> new LinkedHashMap<>());
 
-
-		BreadCrumbLink breadCrumbLink;
-		breadCrumbLink = getBreadCrumbLink(request, link, familyMap);
+		BreadCrumbLink breadCrumbLink = getBreadCrumbLink(request, link, familyMap);
 		LinkedList<BreadCrumbLink> currentBreadCrumb = new LinkedList<>();
-		generateBreadCrumbsRecursively(breadCrumbLink,currentBreadCrumb);
+		generateBreadCrumbsRecursively(breadCrumbLink, currentBreadCrumb);
 		session.setAttribute(CURRENT_BREAD_CRUMB_LINKS, currentBreadCrumb);
 	}
-
 
 	private BreadCrumbLink getBreadCrumbLink(HttpServletRequest request, Link link,
                                              LinkedHashMap<String, BreadCrumbLink> familyMap) {
@@ -85,7 +80,6 @@ public class BreadCrumbInterceptor extends HandlerInterceptorAdapter {
 
 		return breadCrumbLink;
 	}
-
 
 	@SuppressWarnings("unchecked")
 	private Map<String, LinkedHashMap<String, BreadCrumbLink>> getBreadCrumbLinksFromSession(HttpSession session) {
@@ -110,8 +104,7 @@ public class BreadCrumbInterceptor extends HandlerInterceptorAdapter {
 		}
 		breadCrumbLinks.add(link);
 	}
-	
-	
+
 	private void createRelationships(LinkedHashMap<String, BreadCrumbLink> familyMap , BreadCrumbLink newLink){
 		Collection<BreadCrumbLink> values = familyMap.values();
 		for (BreadCrumbLink breadCrumbLink : values) {

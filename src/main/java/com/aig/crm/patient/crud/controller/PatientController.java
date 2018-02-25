@@ -27,14 +27,14 @@ public class PatientController {
         return "patients";
     }
 
-    @Link(label="patients.breadcrum.list", family="PatientController", parent = "" )
+    @Link(label="patients.breadcrum.list", family="PatientController", parent = "patients.breadcrum.root" )
     @GetMapping("/list")
     public String getPatientsList(Model model, @SortDefault("surname") Pageable pageable){
         model.addAttribute("patients", patientRepository.findAll(pageable));
         return "/patients/data/patientsList";
     }
 
-    @Link(label="patients.breadcrum.list", family="PatientController", parent = "" )
+    @Link(label="patients.breadcrum.list", family="PatientController", parent = "patients.breadcrum.root" )
     @GetMapping("/find-by-surname/{surname}")
     public String getPatientsBySurname(@PathVariable(value="surname", required = false) String surname,
                                        Model model,
