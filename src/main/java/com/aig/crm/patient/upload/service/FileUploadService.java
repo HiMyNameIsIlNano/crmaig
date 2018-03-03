@@ -57,9 +57,8 @@ public class FileUploadService {
                     .uploadedAt(ZonedDateTime.now())
                     .build();
             fileUploadRepository.save(addressesFile);
-
         } catch (IOException e) {
-            throw new StorageFileNotReadableException("Errore durante il salvataggio dei dati");
+            throw new StorageFileNotReadableException("An error occurred while saving data");
         }
     }
 
@@ -76,7 +75,7 @@ public class FileUploadService {
             List<String[]> addressRecord = addressesCsvReader.readAll();
             List<String[]> patientRecord = patientsCsvReader.readAll();
             if (addressRecord.size() != patientRecord.size()) {
-                throw new DifferentFileRecordAmount("I due file hanno un numero di record diversi");
+                throw new DifferentFileRecordAmount("The two files have a different number of records");
             }
 
             int i = 0;
@@ -85,7 +84,7 @@ public class FileUploadService {
                 i++;
             }
         } catch (IOException e) {
-            throw new StorageFileNotReadableException("Errore durante il salvataggio dei dati");
+            throw new StorageFileNotReadableException("An error occurred while saving data");
         }
     }
 
