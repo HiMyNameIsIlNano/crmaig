@@ -54,8 +54,8 @@ public class FileUploadController {
 
         //throw new StorageFileNotReadableException("Exception while uploading the file");
 
-        fileUploadService.saveCsv(patients, addresses);
         fileUploadService.importData(patients, addresses);
+        fileUploadService.saveCsv(patients, addresses);
 
         // We do not have to bother about exceptions and the respective messages. Exception are handled globally.
         redirectAttributes.addFlashAttribute("uploadResult","upload.file.ok");
