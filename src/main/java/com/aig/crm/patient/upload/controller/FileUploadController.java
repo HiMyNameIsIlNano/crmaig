@@ -1,5 +1,7 @@
 package com.aig.crm.patient.upload.controller;
 
+import com.aig.crm.breadcrumb.annotations.Link;
+import com.aig.crm.patient.upload.exception.DifferentFileRecordAmount;
 import com.aig.crm.patient.upload.service.FileUploadService;
 import com.aig.crm.patient.upload.exception.StorageFileNotReadableException;
 import org.springframework.data.domain.Pageable;
@@ -9,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
+import java.nio.file.FileAlreadyExistsException;
 
 @Controller
 @RequestMapping("/csv")
@@ -25,6 +29,7 @@ public class FileUploadController {
         return "files";
     }
 
+    @Link(label="upload.breadcrum.upload", family="FileUploadController", parent = "" )
     @GetMapping("/list")
     public String listUploadedFiles(Model model, Pageable pageable) {
         model.addAttribute("files", fileUploadService.findAll(pageable));
@@ -45,22 +50,18 @@ public class FileUploadController {
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("patients") MultipartFile patients,
                                    @RequestParam("addresses") MultipartFile addresses,
-                                   Model model) {
+                                   RedirectAttributes redirectAttributes) {
 
-        fileUploadService.saveCsv(patients, addresses);
+        //throw new StorageFileNotReadableException("Exception while uploading the file");
+
         fileUploadService.importData(patients, addresses);
+        fileUploadService.saveCsv(patients, addresses);
 
-        /*redirectAttributes.addFlashAttribute("pazienti_ok",
-                "File " + patients.getOriginalFilename() + "caricato con successo!");
-        redirectAttributes.addFlashAttribute("indirizzi_ok",
-                "File " + addresses.getOriginalFilename() + "caricato con successo!");*/
+        // We do not have to bother about exceptions and the respective messages. Exception are handled globally.
+        redirectAttributes.addFlashAttribute("uploadResult","upload.file.ok");
+        redirectAttributes.addFlashAttribute("fileNames", patients.getOriginalFilename() + ", " + addresses.getOriginalFilename());
 
         return "redirect:/";
-    }
-
-    @ExceptionHandler(StorageFileNotReadableException.class)
-    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotReadableException exc) {
-        return ResponseEntity.notFound().build();
     }
 
 }

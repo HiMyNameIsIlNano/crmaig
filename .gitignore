@@ -26,9 +26,12 @@ nbdist/
 ### Environment Properties ###
 application-h2.properties
 application-psql.properties
-application-ec2.properties
+application-rds.properties
 application.properties
 
 ### SQL Scripts ###
 create_db_schema.sql
 insert_post_deploy.sql
+
+### Others ###
+*.pem

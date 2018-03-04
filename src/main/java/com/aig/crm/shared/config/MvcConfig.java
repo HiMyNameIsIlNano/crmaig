@@ -1,5 +1,6 @@
 package com.aig.crm.shared.config;
 
+import com.aig.crm.breadcrumb.interceptor.BreadCrumbInterceptor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +14,14 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.dialect.springdata.SpringDataDialect;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
+import javax.inject.Inject;
 import java.util.Locale;
 
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
+
+    @Inject
+    private BreadCrumbInterceptor breadCrumbInterceptor;
 
     @Bean
     public SpringDataDialect springDataDialect() {
@@ -59,5 +64,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+        registry.addInterceptor(breadCrumbInterceptor);
     }
 }

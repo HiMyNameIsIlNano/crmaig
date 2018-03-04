@@ -1,388 +1,394 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="fragments/header :: header-css"/>s
+    <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
 
 <div th:replace="fragments/header :: header(patientList)"/>
 
 <div class="container">
-        <div class="row">
+    <div th:replace="fragments/breadcrumbs :: breadcrumbs">...</div>
+</div>
+
+<div class="container">
+
+    <div class="row">
             <div class="col-md-10 ">
                 <form class="form-horizontal">
-                    <fieldset>
+                        <fieldset>
 
-                        <legend th:text="#{patient.details.title}">User profile details</legend>
+                            <legend th:text="#{patient.details.title}">User profile details</legend>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.name}"
-                                   for="userName">Name</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-user"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.name}"
+                                       for="userName">Name</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.name}"
+                                               id="userName"
+                                               name="userName"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.name}"
-                                           id="userName"
-                                           name="userName"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.surname}"
-                                   for="userSurname">Surname</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-user"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.surname}"
+                                       for="userSurname">Surname</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.surname}"
+                                               id="userSurname"
+                                               name="userSurname"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.surname}"
-                                           id="userSurname"
-                                           name="userSurname"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.dateOfBirth}"
-                                   for="userDateOfBirth">Date of Birth</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-birthday-cake"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.dateOfBirth}"
+                                       for="userDateOfBirth">Date of Birth</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-birthday-cake"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.dateOfBirth}"
+                                               id="userDateOfBirth"
+                                               name="userDateOfBirth"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.dateOfBirth}"
-                                           id="userDateOfBirth"
-                                           name="userDateOfBirth"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.age}"
-                                   for="userAge">Age</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-gift"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.age}"
+                                       for="userAge">Age</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-gift"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.age}"
+                                               id="userAge"
+                                               name="userAge"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.age}"
-                                           id="userAge"
-                                           name="userAge"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.glycogenSDType}"
-                                   for="userGlycogenSDType">Glycogen Type</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-wheelchair"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.glycogenSDType}"
+                                       for="userGlycogenSDType">Glycogen Type</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-wheelchair"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="#{${'patients.gsd.'+patient.glycogenSDType}}"
+                                               id="userGlycogenSDType"
+                                               name="userGlycogenSDType"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="#{${'patients.gsd.'+patient.glycogenSDType}}"
-                                           id="userGlycogenSDType"
-                                           name="userGlycogenSDType"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.hospital}"
-                                   for="userHospital">Hospital</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-hospital-o"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.hospital}"
+                                       for="userHospital">Hospital</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-hospital-o"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.hospital}"
+                                               id="userHospital"
+                                               name="userHospital"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.hospital}"
-                                           id="userHospital"
-                                           name="userHospital"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.parents}"
-                                   for="userParents">Parents</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-male"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.parents}"
+                                       for="userParents">Parents</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-male"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.parents}"
+                                               id="userParents"
+                                               name="userParents"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.parents}"
-                                           id="userParents"
-                                           name="userParents"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.sons}"
-                                   for="userSons">Sons</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-female"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.sons}"
+                                       for="userSons">Sons</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-female"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.sons}"
+                                               id="userSons"
+                                               name="userSons"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.sons}"
-                                           id="userSons"
-                                           name="userSons"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.street}"
-                                   for="userStreet">Street</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-location-arrow"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.street}"
+                                       for="userStreet">Street</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-location-arrow"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.street}"
+                                               id="userStreet"
+                                               name="userStreet"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.street}"
-                                           id="userStreet"
-                                           name="userStreet"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.city}"
-                                   for="userCity">City</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-home"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.city}"
+                                       for="userCity">City</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-home"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.city}"
+                                               id="userCity"
+                                               name="userCity"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.city}"
-                                           id="userCity"
-                                           name="userCity"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.poBox}"
-                                   for="userPoBox">P.O. Box</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-inbox"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.poBox}"
+                                       for="userPoBox">P.O. Box</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-inbox"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.poBox}"
+                                               id="userPoBox"
+                                               name="userPoBox"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.poBox}"
-                                           id="userPoBox"
-                                           name="userPoBox"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.prov}"
-                                   for="userProvince">Province</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-street-view"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.prov}"
+                                       for="userProvince">Province</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-street-view"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.prov}"
+                                               id="userProvince"
+                                               name="userProvince"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.prov}"
-                                           id="userProvince"
-                                           name="userProvince"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.deliveryAddress}"
-                                   for="userDeliveryAddress">Delivery Address</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-address-card"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.deliveryAddress}"
+                                       for="userDeliveryAddress">Delivery Address</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-address-card"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.deliveryAddress}"
+                                               id="userDeliveryAddress"
+                                               name="userDeliveryAddress"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.deliveryAddress}"
-                                           id="userDeliveryAddress"
-                                           name="userDeliveryAddress"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.region}"
-                                   for="userRegion">Region</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-map-pin"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.region}"
+                                       for="userRegion">Region</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-map-pin"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.region}"
+                                               id="userRegion"
+                                               name="userRegion"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.region}"
-                                           id="userRegion"
-                                           name="userRegion"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.nation}"
-                                   for="userNation">Region</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-flag"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.nation}"
+                                       for="userNation">Region</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-flag"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.nation}"
+                                               id="userNation"
+                                               name="userNation"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.nation}"
-                                           id="userNation"
-                                           name="userNation"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.telephone}"
-                                   for="userPhone">Phone number</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-phone fa-1x"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.telephone}"
+                                       for="userPhone">Phone number</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-phone fa-1x"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.phone}"
+                                               id="userPhone"
+                                               name="userPhone"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.phone}"
-                                           id="userPhone"
-                                           name="userPhone"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.mobilePhone}"
-                                   for="userMobilePhone">Mobile number</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-mobile fa-1x"></i>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.mobilePhone}"
+                                       for="userMobilePhone">Mobile number</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-mobile fa-1x"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.mobilePhone}"
+                                               id="userMobilePhone"
+                                               name="userMobilePhone"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.mobilePhone}"
-                                           id="userMobilePhone"
-                                           name="userMobilePhone"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Text input-->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"
-                                   th:text="#{patient.details.email}"
-                                   for="userEmail">Email Address</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-envelope-o"></i>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       th:text="#{patient.details.email}"
+                                       for="userEmail">Email Address</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </div>
+                                        <input readonly="readonly"
+                                               th:value="${patient.address.email}"
+                                               id="userEmail"
+                                               name="userEmail"
+                                               type="text"
+                                               th:placeholder="#{patient.details.emptyField}"
+                                               class="form-control input-md">
                                     </div>
-                                    <input readonly="readonly"
-                                           th:value="${patient.address.email}"
-                                           id="userEmail"
-                                           name="userEmail"
-                                           type="text"
-                                           th:placeholder="#{patient.details.emptyField}"
-                                           class="form-control input-md">
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
-                </form>
+                        </fieldset>
+                    </form>
             </div>
             <div class="col-md-2 hidden-xs">
                 <i class="fa fa-user-circle fa-5x" aria-hidden="true"></i>
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- /.container -->

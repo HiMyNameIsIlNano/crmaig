@@ -16,7 +16,16 @@
                 <div th:replace="fragments/alert :: alert (type='danger', message=#{home.auth.error})">...</div>
             </div>
         </div>
+
+        <div th:if="${#ctx.containsVariable('uploadResult')}">
+            <div th:replace="fragments/alert :: alert (type='info', message=${uploadResult})">...</div>
+        </div>
+
+        <!--<div th:if="${#ctx.containsVariable('infoMessage')}">
+            <div th:replace="fragments/alert :: alert (type='info', message=${infoMessage})">...</div>
+        </div>-->
     </div>
+
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">

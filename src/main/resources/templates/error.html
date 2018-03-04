@@ -5,14 +5,14 @@
 </head>
 <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
 
-<div th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: header(home)"/>
 
 <div class="container">
 
     <div class="starter-template">
-        <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
-        <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-        <a href="home.html" th:href="@{/index.html}">Back to Home Page</a>
+        <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">Error</h1>
+        <p th:utext="${errorMessage}">Error Message</p>
+        <a href="home.html" th:href="@{/index.html}" th:text="#{error.back}">Back to the Home Page</a>
     </div>
 
 </div>
