@@ -104,7 +104,7 @@ public class FileUploadService {
         String qa2016 = patientRecord[PatientCsvEnum.fromName(QA_2016)];
         String qa2017 = patientRecord[PatientCsvEnum.fromName(QA_2017)];
         String qa2018 = patientRecord[PatientCsvEnum.fromName(QA_2018)];
-        String note = patientRecord[PatientCsvEnum.fromName(NOTE)];
+        byte[] note = patientRecord[PatientCsvEnum.fromName(NOTE)].getBytes();
 
         Address address;
         String street = addressRecord[AddressCsvEnum.fromName(AddressCsvEnum.STREET)];
