@@ -18,7 +18,7 @@
         </div>
 
         <div th:if="${#ctx.containsVariable('uploadResult')}">
-            <div th:replace="fragments/alert :: alert (type='info', message=${uploadResult})">...</div>
+            <div th:replace="fragments/alert :: alert (type='info', message=#{${uploadResult}})">...</div>
         </div>
 
         <!--<div th:if="${#ctx.containsVariable('infoMessage')}">

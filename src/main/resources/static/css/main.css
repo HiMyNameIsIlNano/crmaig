@@ -84,3 +84,13 @@
 .breadcrum-spaced {
     margin-bottom: 60px;
 }
+.progress {
+    position: relative;
+}
+
+.progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: white;
+}

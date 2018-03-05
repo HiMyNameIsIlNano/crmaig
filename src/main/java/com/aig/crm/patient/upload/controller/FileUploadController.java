@@ -52,8 +52,6 @@ public class FileUploadController {
                                    @RequestParam("addresses") MultipartFile addresses,
                                    RedirectAttributes redirectAttributes) {
 
-        //throw new StorageFileNotReadableException("Exception while uploading the file");
-
         fileUploadService.importData(patients, addresses);
         fileUploadService.saveCsv(patients, addresses);
 

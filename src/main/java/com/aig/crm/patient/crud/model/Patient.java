@@ -68,8 +68,7 @@ public class Patient {
 
     @Column(name = "NOTE")
     @Lob
-    @Type(type = "text")
-    private String note;
+    private byte[] note;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "REF_INDIRIZZO")
