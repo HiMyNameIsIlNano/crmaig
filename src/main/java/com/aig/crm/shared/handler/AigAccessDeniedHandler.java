@@ -1,4 +1,4 @@
-package com.aig.crm.shared.error;
+package com.aig.crm.shared.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

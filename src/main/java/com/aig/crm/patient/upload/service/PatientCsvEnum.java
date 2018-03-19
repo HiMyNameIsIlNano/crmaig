@@ -29,6 +29,8 @@ public enum PatientCsvEnum {
         return index;
     }
 
+    public static int getRecordLength() { return NOTE.index; }
+
     public static int fromName(PatientCsvEnum column) {
         return column.getIndex();
     }

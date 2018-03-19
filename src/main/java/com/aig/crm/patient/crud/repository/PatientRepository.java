@@ -9,4 +9,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     Page<Patient> findBySurname(Pageable pageable, String surname);
 
+    Patient findBySsn(String ssn);
+
 }

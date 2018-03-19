@@ -10,8 +10,11 @@ import com.aig.crm.patient.upload.model.FileCategory;
 import com.aig.crm.patient.upload.model.FileUpload;
 import com.aig.crm.patient.upload.repository.FileUploadRepository;
 import com.aig.crm.shared.DateUtils;
+import com.aig.crm.shared.service.PatientNaturalKeyCalculatorClient;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,11 +27,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.aig.crm.patient.upload.service.PatientCsvEnum.*;
 
 @Service
 public class FileUploadService {
+
+    private static final Logger log = LoggerFactory.getLogger(FileUploadService.class);
 
     @Inject
     private PatientRepository patientRepository;
@@ -36,30 +42,11 @@ public class FileUploadService {
     @Inject
     private FileUploadRepository fileUploadRepository;
 
+    @Inject
+    private PatientNaturalKeyCalculatorClient patientNaturalKeyCalculatorClient;
+
     public Page<FileUpload> findAll(Pageable pageable) {
         return fileUploadRepository.findAll(pageable);
-    }
-
-    public void saveCsv(MultipartFile patients, MultipartFile addresses) {
-        try {
-            FileUpload patientsFile = FileUpload.builder()
-                    .category(FileCategory.PATIENTS)
-                    .fileName(patients.getOriginalFilename())
-                    .fileContent(patients.getBytes())
-                    .uploadedAt(ZonedDateTime.now())
-                    .build();
-            fileUploadRepository.save(patientsFile);
-
-            FileUpload addressesFile = FileUpload.builder()
-                    .category(FileCategory.ADDRESSES)
-                    .fileName(addresses.getOriginalFilename())
-                    .fileContent(addresses.getBytes())
-                    .uploadedAt(ZonedDateTime.now())
-                    .build();
-            fileUploadRepository.save(addressesFile);
-        } catch (IOException e) {
-            throw new StorageFileNotReadableException("An error occurred while saving data");
-        }
     }
 
     public void importData(MultipartFile patients, MultipartFile addresses) {
@@ -72,16 +59,22 @@ public class FileUploadService {
                 BufferedReader addressesReader = new BufferedReader(new InputStreamReader(addressesStream));
                 CSVReader addressesCsvReader = new CSVReaderBuilder(addressesReader).withSkipLines(1).build()
         ) {
-            List<String[]> addressRecord = addressesCsvReader.readAll();
-            List<String[]> patientRecord = patientsCsvReader.readAll();
-            if (addressRecord.size() != patientRecord.size()) {
+            List<String[]> addressRecords = addressesCsvReader.readAll();
+            List<String[]> patientRecords = patientsCsvReader.readAll();
+            if (addressRecords.size() != patientRecords.size()) {
                 throw new DifferentFileRecordAmount("The two files have a different number of records");
             }
 
             int i = 0;
-            for (String[] patient : patientRecord) {
-                savePatient(patient, addressRecord.get(i));
-                i++;
+            for (String[] patient : patientRecords) {
+                String[] address = addressRecords.get(i);
+                if (patient.length == PatientCsvEnum.getRecordLength()
+                        && address.length == AddressCsvEnum.getRecordLength()) {
+                    savePatient(patient, address);
+                    i++;
+                } else {
+                    log.info("An empty line in one of the two CSV files has just been skipped");
+                }
             }
         } catch (IOException e) {
             throw new StorageFileNotReadableException("An error occurred while saving data");
@@ -118,22 +111,33 @@ public class FileUploadService {
         String phone = addressRecord[AddressCsvEnum.fromName(AddressCsvEnum.PHONE)];
         String mobilePhone = addressRecord[AddressCsvEnum.fromName(AddressCsvEnum.MOBILE_PHONE)];
 
-        address = Address.builder()
-                .poBox(poBox)
-                .mobilePhone(mobilePhone)
-                .street(street)
-                .city(city)
-                .prov(prov)
-                .region(region)
-                .nation(nation)
-                .deliveryAddress(deliveryAddress)
-                .email(email)
-                .phone(phone)
-                .build();
+        Optional<String> ssn = patientNaturalKeyCalculatorClient.getPatientNaturalKey(name,
+                surname,
+                city,
+                dateOfBirth,
+                "M");
 
-        patientRepository.save(
-                Patient.builder()
+        if (ssn.isPresent()) {
+            Patient aPatient = patientRepository.findBySsn(ssn.get());
+
+            // Check if a patient with the same SSN already exists. If so, skip the patient then.
+            if (aPatient == null) {
+                address = Address.builder()
+                        .poBox(poBox)
+                        .mobilePhone(mobilePhone)
+                        .street(street)
+                        .city(city)
+                        .prov(prov)
+                        .region(region)
+                        .nation(nation)
+                        .deliveryAddress(deliveryAddress)
+                        .email(email)
+                        .phone(phone)
+                        .build();
+
+                Patient patient = Patient.builder()
                         .insertionDate(isValidDate(insertionDate) ? DateUtils.fromString(insertionDate) : null)
+                        .ssn(ssn.get())
                         .name(name)
                         .surname(surname)
                         .glycogenSDType(GlycogenStorageDiseaseType.fromString(glycogenSDType))
@@ -150,8 +154,14 @@ public class FileUploadService {
                         .qa2018(qa2018)
                         .note(note)
                         .address(address)
-                        .build()
-        );
+                        .build();
+
+                patientRepository.save(patient);
+            } else {
+                // TODO: update instead of skipping
+                log.info("Skipped patient with ssn " + ssn + "as it already exists");
+            }
+        }
     }
 
     private boolean isValidDate(String data) {
@@ -161,4 +171,27 @@ public class FileUploadService {
     private boolean isValidNumber(String number) {
         return number != null && !"".equals(number);
     }
+
+    public void saveCsv(MultipartFile patients, MultipartFile addresses) {
+        try {
+            FileUpload patientsFile = FileUpload.builder()
+                    .category(FileCategory.PATIENTS)
+                    .fileName(patients.getOriginalFilename())
+                    .fileContent(patients.getBytes())
+                    .uploadedAt(ZonedDateTime.now())
+                    .build();
+            fileUploadRepository.save(patientsFile);
+
+            FileUpload addressesFile = FileUpload.builder()
+                    .category(FileCategory.ADDRESSES)
+                    .fileName(addresses.getOriginalFilename())
+                    .fileContent(addresses.getBytes())
+                    .uploadedAt(ZonedDateTime.now())
+                    .build();
+            fileUploadRepository.save(addressesFile);
+        } catch (IOException e) {
+            throw new StorageFileNotReadableException("An error occurred while saving data");
+        }
+    }
+
 }

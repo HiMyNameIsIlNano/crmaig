@@ -20,6 +20,9 @@ public class Patient {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
+    @Column(name = "CODICE_FISCALE")
+    private String ssn;
+
     @Column(name = "DATA_INSERIMENTO")
     private Date insertionDate;
 
