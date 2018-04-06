@@ -23,7 +23,7 @@ public enum AddressCsvEnum {
         return index;
     }
 
-    public static int getRecordLength() { return MOBILE_PHONE.index; }
+    public static int getRecordLength() { return MOBILE_PHONE.index + 1; }
 
     public static int fromName(AddressCsvEnum column) {
         return column.getIndex();

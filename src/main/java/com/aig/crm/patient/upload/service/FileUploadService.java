@@ -73,7 +73,14 @@ public class FileUploadService {
                     savePatient(patient, address);
                     i++;
                 } else {
-                    log.info("An empty line in one of the two CSV files has just been skipped");
+                    if (patient.length != PatientCsvEnum.getRecordLength()) {
+                        log.info("A record in the patients file differs from its record length");
+                    }
+                    if (address.length != AddressCsvEnum.getRecordLength()) {
+                        log.info("A record in the addresses file differs from its record length");
+                    }
+
+                    throw new StorageFileNotReadableException("An error occurred while saving the data");
                 }
             }
         } catch (IOException e) {
