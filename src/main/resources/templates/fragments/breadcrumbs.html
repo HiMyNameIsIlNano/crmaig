@@ -10,7 +10,7 @@
                 <a th:href="@{/home.html}" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
                 <a th:each="entry : ${session.currentBreadCrumb}"
                    th:text="#{${entry.label}}"
-                   th:href="${entry.url}"
+                   th:href="@{${entry.url}}"
                    class="btn btn-default">Home</a>
             </div>
         </div>
