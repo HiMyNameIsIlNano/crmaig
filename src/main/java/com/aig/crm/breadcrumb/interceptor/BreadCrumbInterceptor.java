@@ -3,10 +3,14 @@ package com.aig.crm.breadcrumb.interceptor;
 
 import com.aig.crm.breadcrumb.annotations.Link;
 import com.aig.crm.breadcrumb.model.BreadCrumbLink;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +21,11 @@ import java.util.*;
 
 @Component
 public class BreadCrumbInterceptor extends HandlerInterceptorAdapter {
+
+	@Inject
+	private Environment environment;
+
+	private static final Logger log = LoggerFactory.getLogger(BreadCrumbInterceptor.class);
 
 	private static final String BREAD_CRUMB_LINKS = "breadCrumb";
 
@@ -72,6 +81,15 @@ public class BreadCrumbInterceptor extends HandlerInterceptorAdapter {
 			breadCrumbLink = new BreadCrumbLink(link.family(), link.label(), true, link.parent());
 			String fullURL = request.getRequestURL().append((request.getQueryString()==null)
 					? "" : "?" + request.getQueryString()).toString();
+
+			Boolean isForceHttps = Boolean.valueOf(environment.getProperty("crmaig.https.force"));
+			if (isForceHttps) {
+                fullURL = fullURL.replace("http", "https");
+            }
+
+			log.info("request URL: " + request.getRequestURL());
+			log.info("request Query String: " + request.getQueryString());
+			log.info("full URL: " + fullURL);
 
 			breadCrumbLink.setUrl(fullURL);
 			createRelationships(familyMap, breadCrumbLink);
